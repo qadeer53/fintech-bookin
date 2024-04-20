@@ -1,23 +1,30 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Request,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Review } from './review.entity';
+import { JwtAuthGuard } from 'src/auth/auth-guard';
 
-@Controller('reviews')
+@Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
-
   @Get()
-  async findAll(): Promise<Review[]> {
-    return this.reviewService.findAll();
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Review> {
-    return this.reviewService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  async findUserReviews(@Request() req): Promise<Review[]> {
+    const userId = req.user.id;
+    return this.reviewService.findUserReviews(userId);
   }
 
   @Post()
-  async create(@Body() review: Review): Promise<Review> {
-    return this.reviewService.create(review);
+  @UseGuards(JwtAuthGuard)
+  async create(@Body() review: Review, @Request() req): Promise<Review> {
+    const userId = req.user.id;
+    return this.reviewService.create({ ...review, user: userId });
   }
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Review } from 'src/review/review.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum BookingStatus {
   UNPAID = 'unpaid',
@@ -18,6 +19,9 @@ export class Booking {
 
   @Column()
   endDate: Date;
+
+  @OneToMany(() => Review, (review) => review.booking)
+  reviews: Review[];
 
   @Column({
     type: 'enum',

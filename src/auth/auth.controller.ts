@@ -21,13 +21,7 @@ export class AuthController {
   async login(@Body() req: LoginDto) {
     const user = await this.authService.validateUser(req.email, req.password);
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    const userWithRelation = await this.userService.findUserWithRelations(
-      user.id,
-    );
+    const userWithRelation = await this.userService.findUserById(user.id);
 
     return {
       token: await this.authService.login(user),

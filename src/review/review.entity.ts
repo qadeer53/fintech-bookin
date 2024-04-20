@@ -20,10 +20,10 @@ export class Review {
   rating: number;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user' })
   user: User;
 
   @ManyToOne(() => Booking)
-  @JoinColumn({ name: 'bookingId' })
+  @JoinColumn({ name: 'booking' })
   booking: Booking;
 }

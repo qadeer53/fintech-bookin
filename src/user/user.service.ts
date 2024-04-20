@@ -30,10 +30,9 @@ export class UserService {
     }
   }
 
-  async findUserWithRelations(userId: number): Promise<User | undefined> {
+  async findUserById(userId: number): Promise<User | undefined> {
     return this.userRepository.findOne({
-      where: { id: userId },
-      relations: ['business', 'business.pictures', 'subscription'],
+      where: { id: userId }
     });
   }
 

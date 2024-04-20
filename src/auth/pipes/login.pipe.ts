@@ -1,14 +1,10 @@
-import {
-  ArgumentMetadata,
-  BadRequestException,
-  PipeTransform,
-} from '@nestjs/common';
+import { BadRequestException, PipeTransform } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { LoginDto } from '../dtos/login.dto';
 
 export class LoginPipe implements PipeTransform {
-  async transform(value: any, metadata: ArgumentMetadata): Promise<any> {
+  async transform(value: any): Promise<any> {
     const loginClass = plainToInstance(LoginDto, value);
 
     const errors = await validate(loginClass);

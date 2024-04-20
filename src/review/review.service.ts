@@ -10,12 +10,8 @@ export class ReviewService {
     private readonly reviewRepository: Repository<Review>,
   ) {}
 
-  async findAll(): Promise<Review[]> {
-    return this.reviewRepository.find();
-  }
-
-  async findOne(id: number): Promise<Review> {
-    return this.reviewRepository.findOneBy({ id });
+  async findUserReviews(id: number): Promise<Review[]> {
+    return this.reviewRepository.find({ where: { user: { id: id } } });
   }
 
   async create(review: Review): Promise<Review> {

@@ -6,10 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { BookingController } from './booking/booking.controller';
-import { BookingService } from './booking/booking.service';
 import { BookingModule } from './booking/booking.module';
-import { ReviewService } from './review/review.service';
 import { ReviewModule } from './review/review.module';
 
 @Module({
@@ -18,7 +15,7 @@ import { ReviewModule } from './review/review.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'postgres',
         host: configService.get('DB_HOST'),
         port: +configService.get('DB_PORT'),
         username: configService.get('DB_USERNAME'),
@@ -34,7 +31,7 @@ import { ReviewModule } from './review/review.module';
     BookingModule,
     ReviewModule,
   ],
-  controllers: [AppController, BookingController],
-  providers: [AppService, BookingService, ReviewService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
