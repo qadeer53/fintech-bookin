@@ -6,6 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { BookingController } from './booking/booking.controller';
+import { BookingService } from './booking/booking.service';
+import { BookingModule } from './booking/booking.module';
+import { ReviewService } from './review/review.service';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -26,8 +31,10 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    BookingModule,
+    ReviewModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, BookingController],
+  providers: [AppService, BookingService, ReviewService],
 })
 export class AppModule {}
